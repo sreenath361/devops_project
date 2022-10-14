@@ -1,0 +1,11 @@
+Login to DB:
+--------------
+su postgres
+postgres@225a2b5f8418:/$ psql 
+
+
+List Tables:
+Command:  \dt
+
+
+select * from auth_user;
