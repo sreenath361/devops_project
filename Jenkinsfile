@@ -7,14 +7,14 @@ pipeline {
     }
     agent any
     stages {
-        stage('Cloning our Git') {
+        stage('Code Checkout') {
             steps {
                 git 'git@github.com:sreenath361/devops_project.git'
                 sh "ls -al"
                 sh "pwd"
             }
         }
-        stage('Building our image') {
+        stage('Building the image') {
             steps {
                 script {
                     dockerImage = docker.build registry + ":v$BUILD_NUMBER"
@@ -30,12 +30,12 @@ pipeline {
                 }
             }
         }
-        stage('Cleaning up') {
+        stage('Cleaning Up') {
             steps {
                 sh "docker rmi $registry:v$BUILD_NUMBER"
             }
         }
-        stage('Deploying the app') {
+        stage('Deploying the App') {
             steps {
                 sh "ls -al"
                 sh "pwd"
