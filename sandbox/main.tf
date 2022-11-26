@@ -28,16 +28,16 @@ module test-ec2 {
     machinecount = "${module.testenv.env == "Prod" ? 3: 1}"
     public_subnets = "${module.testenv.all_public_subnets}"
     sg = "${module.testenv.sg_id}"   
-    #iam_instance_profile = "${module.test_iam.instprofile}"
+    iam_instance_profile = "${module.test_iam.instprofile}"
 }
 
 #IAM Module
-#module "test_iam" {
-  #source  = "/var/lib/jenkins/workspace/devops-project/modules/iam"
-  #rolename = "terraform-ec2-testing-role"
-  #envname = "${module.testenv.env}"
- # instanceprofilename = "ec2-testing-inst-profile"
-#}
+module "test_iam" {
+  source  = "/var/lib/jenkins/workspace/devops-project/modules/iam"
+  rolename = "terraform-ec2-testing-role"
+  envname = "${module.testenv.env}"
+  instanceprofilename = "ec2-testing-inst-profile"
+}
 
 #EFS filesystem creation Module
 module "test_efs" {

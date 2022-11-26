@@ -5,4 +5,4 @@ variable "machinecount" {}
 variable "public_subnets" {}
 variable "sg" {}
 variable "environment" {}
-#variable "iam_instance_profile" {}
+variable "iam_instance_profile" {}

@@ -13,5 +13,5 @@ resource "aws_instance" "Public-Servers" {
         Owner = "Sreenath Reddy"
 	CostCenter = "ABCD"
     }
-#iam_instance_profile = var.iam_instance_profile
+iam_instance_profile = var.iam_instance_profile
 }

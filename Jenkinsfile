@@ -25,8 +25,14 @@ pipeline {
             }
         }
         stage('Terraform Destroy') {
+            when {
+                    expression {
+                        params.ACTION == 'DESTROY'
+                    }
+                }
             steps {
-                    sh 'terraform destroy --auto-approve "tfplan"'
+                    sh 'terraform init'
+                    sh 'terraform destroy --auto-approve'
                 }
         }
     }
