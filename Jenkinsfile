@@ -28,7 +28,6 @@ pipeline {
                 }
             steps {
                     sh "cd sandbox && pwd"
-                    sh 'terraform init'
                     sh 'terraform apply --auto-approve'
             }
         }
