@@ -1,6 +1,6 @@
+properties([parameters([choice(choices: ['plan', 'apply', 'destroy'], name: 'action')])])
 pipeline {
     agent any
- 
     stages {
         stage('Code Checkout') {
             steps {
@@ -14,12 +14,18 @@ pipeline {
 		}
 	}
         stage('Terraform Plan') {
+            when {
+                expression { params.action == 'plan'}
+            }
             steps {
                     sh "cd sandbox && terraform init"
                     sh 'cd sandbox && terraform plan -out tfplan'
             }
         }
         stage('Terraform Apply') {
+            when {
+                expression { params.action == 'apply'}
+            }
             steps {
                     sh 'cd sandbox && terraform apply --auto-approve "tfplan"'
             }
@@ -29,15 +35,13 @@ pipeline {
                     sh 'cd sandbox && aws s3 cp tfplan s3://terraform-bucket-tfvars/'
             }
         }
-        stage('Terraform Destroy') {
-            when {
-                    expression {
-                        params.ACTION == 'DESTROY'
-                    }
-                }
+         stage('Terraform Destroy') {
+             when {
+                expression { params.action == 'destroy'}
+            }
             steps {
-                    sh 'terraform destroy --auto-approve'
-                }
+                sh 'cd sandbox && terraform destroy --auto-approve'
+            }
         }
     }
 }
