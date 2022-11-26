@@ -16,8 +16,7 @@ pipeline {
                 }
             steps {
                     sh "cd sandbox && terraform init"
-                    sh 'cd sandbox && 
-terraform plan'
+                    sh 'cd sandbox && terraform plan'
             }
         }
         stage('Terraform Apply') {
