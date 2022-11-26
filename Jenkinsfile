@@ -14,32 +14,17 @@ pipeline {
 		}
 	}
         stage('Terraform Plan') {
-            when {
-                    expression {
-                        params.ACTION == 'PLAN'
-                    }
-                }
             steps {
                     sh "cd sandbox && terraform init"
                     sh 'cd sandbox && terraform plan -out tfplan'
             }
         }
         stage('Terraform Apply') {
-            when {
-                    expression {
-                        params.ACTION == 'APPLY'
-                    }
-                }
             steps {
                     sh 'cd sandbox && terraform apply --auto-approve "tfplan"'
             }
         }
         stage('Terraform Destroy') {
-            when {
-                    expression {
-                        params.ACTION == 'DESTROY'
-                    }
-                }
             steps {
                     sh 'terraform destroy --auto-approve "tfplan"'
                 }
