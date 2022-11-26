@@ -32,12 +32,12 @@ module test-ec2 {
 }
 
 #IAM Module
-module "test_iam" {
-  source  = "/var/lib/jenkins/workspace/devops-project/modules/iam"
-  rolename = "terraform-ec2-testing-role"
-  envname = "${module.testenv.env}"
-  instanceprofilename = "ec2-testing-inst-profile"
-}
+#module "test_iam" {
+  #source  = "/var/lib/jenkins/workspace/devops-project/modules/iam"
+  #rolename = "terraform-ec2-testing-role"
+  #envname = "${module.testenv.env}"
+ # instanceprofilename = "ec2-testing-inst-profile"
+#}
 
 #EFS filesystem creation Module
 module "test_efs" {
