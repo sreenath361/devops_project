@@ -1,0 +1,31 @@
+resource "null_resource" "ec2-script" {
+  count = "${var.environment == "Prod" ? 3: 1}"
+  provisioner "file" {
+    source = "script.sh"
+    destination = "/tmp/script.sh"
+    connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = "${file("devops.pem")}"
+    host     = "${element(aws_instance.Public-Servers.*.public_ip, count.index)}"
+     }
+  }
+    
+    provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/script.sh",
+        "sudo /tmp/script.sh",
+    ]
+    connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = "${file("devops.pem")}"
+    host     = "${element(aws_instance.Public-Servers.*.public_ip, count.index)}"
+     }
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${element(aws_instance.Public-Servers.*.public_ip, count.index)} >> public_ips.txt && echo ${element(aws_instance.Public-Servers.*.private_ip, count.index)} >> private_ips.txt"
+  }
+
+}

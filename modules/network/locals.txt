@@ -1,0 +1,52 @@
+locals {
+country = var.localsnew["country"]
+ports = [80, 81, 443]
+}
+
+resource "aws_security_group" "allow_all_3" {
+  name        = "allow_all_3"
+  description = "Allow all inbound traffic"
+  vpc_id      = "${aws_vpc.default.id}"
+
+dynamic "ingress" {
+    for_each = local.ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+tags = {
+country = local.country
+}
+
+}
+
+resource "aws_security_group" "allow_all_2" {
+  name        = "allow_all_2"
+  description = "Allow all inbound traffic"
+  vpc_id      = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+    }
+}
