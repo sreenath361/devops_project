@@ -6,7 +6,7 @@ provider "aws" {
 }
 #Vpc Module
 module testenv {
-    source = "/root/devops_project/terraform_modules/modules/network"
+    source = "/modules/network"
     vpc_cidr = "10.1.0.0/16"
     vpc_name = "terraform-aws-testing"
     IGW_name = "terraform-aws-igw"
@@ -18,9 +18,9 @@ module testenv {
     privatecidrs = ["10.1.10.0/24", "10.1.20.0/24", "10.1.30.0/24"]
 }
 
-#EC@ instance creation module
+#EC2 instance creation module
 module test-ec2 {
-    source = "/root/devops_project/terraform_modules/modules/ec2"
+    source = "/modules/ec2"
     imagename = "ami-052efd3df9dad4825"
     instance_type = "t2.micro"
     key_name = "devops"
@@ -33,7 +33,7 @@ module test-ec2 {
 
 #IAM Module
 module "test_iam" {
-  source  = "/root/devops_project/terraform_modules/modules/iam"
+  source  = "/modules/iam"
   rolename = "terraform-ec2-testing-role"
   envname = "${module.testenv.env}"
   instanceprofilename = "ec2-testing-inst-profile"
@@ -41,7 +41,7 @@ module "test_iam" {
 
 #EFS filesystem creation Module
 module "test_efs" {
-  source  = "/root/devops_project/terraform_modules/modules/efs"
+  source  = "/modules/efs"
   efsname = "terraform-efs"
   subnets = "${module.testenv.all_public_subnets}"
   sg = "${module.testenv.sg_id}"
