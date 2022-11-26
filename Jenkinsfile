@@ -24,6 +24,11 @@ pipeline {
                     sh 'cd sandbox && terraform apply --auto-approve "tfplan"'
             }
         }
+        stage('Storing state file to S3') {
+            steps {
+                    sh 'cd sandbox && aws s3 cp tfplan s3://terraform-bucket-tfvars/'
+            }
+        }
         stage('Terraform Destroy') {
             when {
                     expression {
@@ -31,7 +36,6 @@ pipeline {
                     }
                 }
             steps {
-                    sh 'terraform init'
                     sh 'terraform destroy --auto-approve'
                 }
         }
