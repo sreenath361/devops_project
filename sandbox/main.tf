@@ -6,7 +6,7 @@ provider "aws" {
 }
 #Vpc Module
 module testenv {
-    source = "/modules/network"
+    source = "/.."
     vpc_cidr = "10.1.0.0/16"
     vpc_name = "terraform-aws-testing"
     IGW_name = "terraform-aws-igw"
