@@ -15,8 +15,9 @@ pipeline {
                     }
                 }
             steps {
-                    sh "terraform init"
-                    sh 'terraform plan'
+                    sh "cd sandbox && terraform init"
+                    sh 'cd sandbox && 
+terraform plan'
             }
         }
         stage('Terraform Apply') {
@@ -26,7 +27,7 @@ pipeline {
                     }
                 }
             steps {
-                    sh 'terraform apply --auto-approve'
+                    sh 'cd sandbox && terraform apply --auto-approve'
             }
         }
         stage('Terraform Destroy') {
