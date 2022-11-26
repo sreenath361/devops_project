@@ -8,6 +8,11 @@ pipeline {
                 sh "cd sandbox && pwd && ls -al"
             }
         }
+	stage('Aws get-coller-id') {
+	    steps{
+		  sh "aws sts get-caller-identity"
+		}
+	}
         stage('Terraform Plan') {
             when {
                     expression {
