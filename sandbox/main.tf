@@ -4,6 +4,13 @@ provider "aws" {
     secret_key = "F/lI6MtNtTgS5Orj+rIXxk6A2vDl1m8IT/fcuJKE"
     region = "us-east-1"
 }
+terraform {
+    backend "s3" {
+    bucket = "terraform-bucket-tfvars"
+    key = "myterraform.tfstate"
+}
+}
+
 #Vpc Module
 module testenv {
     source = "/var/lib/jenkins/workspace/devops-project/modules/network"
