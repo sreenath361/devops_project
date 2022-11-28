@@ -1,7 +1,7 @@
 #This Terraform Code Deploys Basic VPC Infra.
 provider "aws" {
-    access_key = "AKIATX7VAWSQDTQG354B"
-    secret_key = "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"
+    #access_key = ""
+    #secret_key = ""
     region = "us-east-1"
 }
 
